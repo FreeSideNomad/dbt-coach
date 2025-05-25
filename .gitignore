@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+dist/
+build/
+*.log
+*.sqlite3
+*.db
+*.env
+.venv/
+
+# Node/Angular
+node_modules/
+dist/
+.tmp/
+.angular/
+coverage/
+
+# VSCode
+.vscode/
+
+# OS/Editor
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+
+# Environment/Secrets
+.env*
+
+# Misc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore frontend build output
+frontend/dist/
+frontend/node_modules/
+
+# Ignore backend build output
+backend/__pycache__/
+backend/.pytest_cache/
+backend/.mypy_cache/
+backend/.venv/
+backend/venv/
+backend/build/
+backend/dist/
+backend/*.egg-info/
+backend/.env
+
+# Ignore test output
+*.spec.ts.snap
+
+# Ignore docker volumes
+registry-data/

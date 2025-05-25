@@ -1,0 +1,70 @@
+<div class="welcome-container mat-typography">
+  <ng-container *ngIf="showInfoDialog">
+    <div class="info-dialog-backdrop"></div>
+    <div class="info-dialog-content">
+      <h2>Welcome to DBT Coach App!</h2>
+      <div style="font-size: 1.05rem; color: #444; margin-bottom: 1.5rem;">
+        <b>What is this app?</b><br>
+        This is your own private chat coach. You can talk about your feelings, ask for advice, or just write down your thoughts. Everything you type is locked up with a secret code that only you know. No one else can read your messages, not even us!
+        <br><br>
+        <b>Why do you need a passphrase?</b><br>
+        Your passphrase is like a super-strong password. It keeps your secrets safe. Make it long and easy for you to remember, but hard for others to guess. For example, you can use a sentence like: <i>"My favorite place is the quiet park at sunrise."</i>
+        <br><br>
+        <b>Why is this safe?</b><br>
+        - Your messages are scrambled (encrypted) before they leave your computer.<br>
+        - No one collects your name or email.<br>
+        - Only you have the key to unlock your chats.
+        <br><br>
+        <b>Cool things you can do:</b>
+        <mat-list>
+          <mat-list-item><mat-icon color="primary">lock</mat-icon> Your chats are private and safe</mat-list-item>
+          <mat-list-item><mat-icon color="primary">vpn_key</mat-icon> You control your secret keys</mat-list-item>
+          <mat-list-item><mat-icon color="primary">person_off</mat-icon> No account or email needed</mat-list-item>
+        </mat-list>
+        <br>
+        If you ever forget your passphrase, no one can help you get it back. So make sure you remember it or write it down somewhere safe!
+      </div>
+      <button mat-raised-button color="primary" (click)="closeInfoDialog()">OK</button>
+    </div>
+  </ng-container>
+
+  <mat-card class="welcome-card">
+    <mat-card-header>
+      <mat-card-title>
+        <span class="brand">DBT Coach App</span>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <h2 style="font-size: 1.2rem; margin-top: 1.5rem;">Get Started</h2>
+      <form (ngSubmit)="createKeypair()" autocomplete="off" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0;">
+        <mat-form-field appearance="outline" style="width: 260px; margin-bottom: 1.5rem;">
+          <mat-label>Chat Name</mat-label>
+          <input matInput [(ngModel)]="label" name="label" maxlength="32" placeholder="e.g. My DBT Chat" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="max-width: 420px; width: 100%; margin-bottom: 1.5rem;">
+          <mat-label>Create a strong passphrase (min 20 characters)</mat-label>
+          <input matInput [type]="showPass ? 'text' : 'password'" [(ngModel)]="passphrase" name="passphrase" minlength="20" required placeholder="e.g. My favorite place is the quiet park at sunrise." (input)="onPassphraseInput()" />
+          <button mat-icon-button matSuffix type="button" (click)="showPass = !showPass" [attr.aria-label]="showPass ? 'Hide passphrase' : 'Show passphrase'">
+            <mat-icon>{{ showPass ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-hint>
+            <span [ngStyle]="{color: passphrase.length >= 20 ? 'green' : 'red'}">{{ passphrase.length }}</span>
+            / 20 characters
+            <span style="margin-left: 8px;">Tip: Use a full sentence you can remember, like "My favorite place is the quiet park at sunrise."</span>
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="max-width: 420px; width: 100%; margin-bottom: 1.5rem;">
+          <mat-label>Verify passphrase</mat-label>
+          <input matInput [type]="showPass ? 'text' : 'password'" [(ngModel)]="verifyPassphrase" name="verifyPassphrase" required placeholder="Re-enter your passphrase" />
+          <button mat-icon-button matSuffix type="button" (click)="showPass = !showPass" [attr.aria-label]="showPass ? 'Hide passphrase' : 'Show passphrase'">
+            <mat-icon>{{ showPass ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <div class="error" *ngIf="passphraseError">
+          <mat-error>{{ passphraseError }}</mat-error>
+        </div>
+        <button mat-raised-button color="primary" class="full-width" type="submit">Create My Secure Keys</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

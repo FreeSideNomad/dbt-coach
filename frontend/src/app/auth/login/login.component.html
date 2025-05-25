@@ -1,0 +1,75 @@
+<div class="login-container mat-typography">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>
+        <span class="brand">DBT Coach App</span>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ng-container *ngIf="!createMode">
+        <h2 style="font-size: 1.2rem; margin-top: 1.5rem;">Unlock Your Chat</h2>
+        <form (ngSubmit)="login()" autocomplete="off" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0; width: 100%;">
+          <mat-form-field appearance="outline" style="width: 260px; margin-bottom: 1.5rem;">
+            <mat-label>Choose a chat</mat-label>
+            <mat-select [(ngModel)]="selectedChat" name="selectedChat" required>
+              <mat-option *ngFor="let chat of chats" [value]="chat">{{ chat }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="max-width: 420px; width: 100%; margin-bottom: 1.5rem;">
+            <mat-label>Enter your passphrase</mat-label>
+            <input matInput [type]="showPass ? 'text' : 'password'" [(ngModel)]="passphrase" name="passphrase" required placeholder="Enter your passphrase" />
+            <button mat-icon-button matSuffix type="button" (click)="showPass = !showPass" [attr.aria-label]="showPass ? 'Hide passphrase' : 'Show passphrase'">
+              <mat-icon>{{ showPass ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+          <div class="error" *ngIf="passphraseError">
+            <mat-error>{{ passphraseError }}</mat-error>
+          </div>
+          <button mat-raised-button color="primary" class="full-width" type="submit" [disabled]="loading || !selectedChat || !passphrase">
+            <span *ngIf="!loading">Unlock Chat</span>
+          </button>
+        </form>
+        <button mat-button color="accent" class="full-width" style="margin-top: 1.5rem;" (click)="toggleCreateMode()">
+          <mat-icon>add</mat-icon> Create a new chat
+        </button>
+      </ng-container>
+      <ng-container *ngIf="createMode">
+        <h2 style="font-size: 1.2rem; margin-top: 1.5rem;">Create a New Chat</h2>
+        <form (ngSubmit)="createNewChat()" autocomplete="off" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0; width: 100%;">
+          <mat-form-field appearance="outline" style="width: 260px; margin-bottom: 1.5rem;">
+            <mat-label>Chat Name</mat-label>
+            <input matInput [(ngModel)]="newChatName" name="newChatName" maxlength="32" placeholder="e.g. My DBT Chat" required />
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="max-width: 420px; width: 100%; margin-bottom: 1.5rem;">
+            <mat-label>Create a strong passphrase (min 20 characters)</mat-label>
+            <input matInput [type]="showPass ? 'text' : 'password'" [(ngModel)]="newPassphrase" name="newPassphrase" minlength="20" required placeholder="e.g. My favorite place is the quiet park at sunrise." />
+            <button mat-icon-button matSuffix type="button" (click)="showPass = !showPass" [attr.aria-label]="showPass ? 'Hide passphrase' : 'Show passphrase'">
+              <mat-icon>{{ showPass ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-hint>
+              <span [ngStyle]="{color: newPassphrase.length >= 20 ? 'green' : 'red'}">{{ newPassphrase.length }}</span>
+              / 20 characters
+              <span style="margin-left: 8px;">Tip: Use a full sentence you can remember, like "My favorite place is the quiet park at sunrise."</span>
+            </mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="max-width: 420px; width: 100%; margin-bottom: 1.5rem;">
+            <mat-label>Verify passphrase</mat-label>
+            <input matInput [type]="showPass ? 'text' : 'password'" [(ngModel)]="verifyNewPassphrase" name="verifyNewPassphrase" required placeholder="Re-enter your passphrase" />
+            <button mat-icon-button matSuffix type="button" (click)="showPass = !showPass" [attr.aria-label]="showPass ? 'Hide passphrase' : 'Show passphrase'">
+              <mat-icon>{{ showPass ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+          <div class="error" *ngIf="passphraseError">
+            <mat-error>{{ passphraseError }}</mat-error>
+          </div>
+          <button mat-raised-button color="primary" class="full-width" type="submit" [disabled]="loading || !newChatName || !newPassphrase || !verifyNewPassphrase">
+            <span *ngIf="!loading">Create Chat</span>
+          </button>
+        </form>
+        <button mat-button color="accent" class="full-width" style="margin-top: 1.5rem;" (click)="toggleCreateMode()">
+          <mat-icon>arrow_back</mat-icon> Back to login
+        </button>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</div>

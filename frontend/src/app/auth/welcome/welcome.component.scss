@@ -1,0 +1,167 @@
+.info-dialog-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1000;
+}
+.info-dialog-content {
+  width: 50vw;
+  max-width: 420px;
+  min-width: 220px;
+  height: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 2.2rem 1rem 1.5rem 1rem;
+  position: fixed;
+  background: #fff;
+  z-index: 1001;
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .info-dialog-content {
+    width: 70vw;
+    max-width: 95vw;
+    padding-right: 4vw;
+    padding-left: 4vw;
+  }
+}
+@media (max-width: 600px) {
+  .info-dialog-content {
+    width: 96vw;
+    min-width: 0;
+    max-width: none;
+    left: 2vw;
+    right: 2vw;
+    top: 4vw;
+    bottom: 4vw;
+    height: auto;
+    transform: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    padding: 2vw 2vw 2vw 2vw;
+    overflow-y: auto;
+  }
+}
+@media (max-width: 480px) {
+  .info-dialog-content {
+    width: 98vw;
+    left: 1vw;
+    right: 1vw;
+    top: 2vw;
+    bottom: 2vw;
+    padding: 1vw 1vw 1vw 1vw;
+    border-radius: 6px;
+  }
+}
+.info-dialog-content h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  margin-bottom: 1.2rem;
+}
+.info-dialog-content button {
+  margin-top: 1.2rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 900px) {
+  .info-dialog-content {
+    padding-right: 4vw;
+    padding-left: 4vw;
+  }
+}
+@media (max-width: 700px) {
+  .info-dialog-content {
+    padding-right: 2vw;
+    padding-left: 2vw;
+  }
+}
+@media (max-width: 600px) {
+  .info-dialog-content {
+    border-radius: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    min-width: 0;
+    max-width: none;
+    max-height: none;
+    transform: none;
+    box-shadow: none;
+    padding: 2vw 2vw 2vw 2vw;
+    overflow-y: auto;
+  }
+}
+@media (max-width: 480px) {
+  .info-dialog-content {
+    padding: 1vw 1vw 1vw 1vw;
+  }
+}
+@media (min-width: 600px) {
+  .info-dialog-content {
+    border-radius: 12px;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    width: auto;
+    height: auto;
+    min-width: 320px;
+    max-width: 95vw;
+    max-height: 90vh;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    padding: 2.2rem 2rem 1.5rem 2rem;
+  }
+}
+.welcome-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f7fa;
+}
+
+.welcome-card {
+  width: 100%;
+  max-width: 420px;
+  margin: 2rem auto;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.brand {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #1976d2;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-card-content {
+  width: 100%;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.error {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+  .welcome-card {
+    max-width: 98vw;
+    margin: 0.5rem;
+    border-radius: 8px;
+  }
+}

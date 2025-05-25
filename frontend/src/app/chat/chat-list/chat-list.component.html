@@ -1,0 +1,22 @@
+<div class="chat-list-sidebar">
+  <mat-nav-list>
+    <mat-list-item *ngFor="let conv of conversations$ | async"
+      [class.selected]="conv.id === selectedId"
+      (click)="selectConversation(conv.id)"
+      (contextmenu)="onRightClick($event, conv.id)"
+      (touchstart)="onTouchStart(conv.id)"
+      (touchend)="onTouchEnd()">
+      <mat-icon matListIcon>chat_bubble_outline</mat-icon>
+      <span matLine>{{ conv.title }}</span>
+    </mat-list-item>
+  </mat-nav-list>
+
+  <div class="delete-popup" *ngIf="showDeletePopup">
+    <div class="delete-popup-backdrop" (click)="cancelDelete()"></div>
+    <div class="delete-popup-content">
+      <p>Delete this conversation?</p>
+      <button mat-stroked-button color="warn" (click)="confirmDelete()">Delete</button>
+      <button mat-button (click)="cancelDelete()">Cancel</button>
+    </div>
+  </div>
+</div>

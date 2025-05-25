@@ -1,0 +1,39 @@
+<div class="chat-outer">
+  <div class="chat-toolbar">
+    <button mat-icon-button class="toolbar-btn" (click)="onNewConversation()" title="New Conversation">
+      <mat-icon>add</mat-icon>
+    </button>
+    <span class="toolbar-title">DBT Coach</span>
+    <button mat-icon-button class="toolbar-btn logout-btn" (click)="logout()" title="Logout">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+  <div class="chat-root">
+    <aside class="sidebar">
+      <app-chat-list (conversationSelected)="onConversationSelected($event)"></app-chat-list>
+    </aside>
+    <main class="chat-main">
+      <ng-container *ngIf="selectedConversation$ | async as conv; else noConv">
+        <div class="chat-messages">
+          <div *ngFor="let msg of conv.messages" [ngClass]="msg.role">
+            <div class="msg-bubble">
+              <span class="msg-content">{{ msg.content }}</span>
+              <span class="msg-meta">{{ msg.role === 'user' ? 'You' : 'Coach' }} • {{ msg.timestamp | date:'shortTime' }}</span>
+            </div>
+          </div>
+        </div>
+        <form class="chat-input-row" (ngSubmit)="sendMessage(conv)">
+          <mat-form-field class="chat-input-field" appearance="outline">
+            <input matInput [(ngModel)]="message" name="message" placeholder="Type your message..." [disabled]="loading" />
+          </mat-form-field>
+          <button mat-icon-button color="primary" type="submit" [disabled]="loading || !message.trim()">
+            <mat-icon>send</mat-icon>
+          </button>
+        </form>
+      </ng-container>
+      <ng-template #noConv>
+        <div class="no-conv">Select or start a conversation to begin.</div>
+      </ng-template>
+    </main>
+  </div>
+</div>
