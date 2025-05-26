@@ -1,0 +1,43 @@
+name: Build and Deploy (Local Runner)
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    env:
+      BACKEND_IMAGE: dbt-coach-backend:latest
+      FRONTEND_IMAGE: dbt-coach-frontend:latest
+      API_URL: http://dbt-coach-backend:8000/api
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build backend image
+        run: |
+          docker build -t $BACKEND_IMAGE -f backend/dockerfile backend
+
+      - name: Build frontend image
+        run: |
+          docker build -t $FRONTEND_IMAGE -f frontend/dockerfile frontend
+
+      - name: Stop and remove old containers (if running)
+        run: |
+          docker rm -f dbt-coach-backend || true
+          docker rm -f dbt-coach-frontend || true
+
+      - name: Start backend container
+        run: |
+          docker run -d --name dbt-coach-backend -p 8000:8000 $BACKEND_IMAGE
+
+      - name: Start frontend container with API_URL
+        run: |
+          docker run -d --name dbt-coach-frontend -p 4200:80 \
+            --link dbt-coach-backend \
+            -e API_URL=$API_URL \
+            dbt-coach-frontend:latest \
+            /bin/sh -c "echo \"window['env'] = { API_URL: 'http://dbt-coach-backend:8000/api' };\" > /usr/share/nginx/html/env.js && nginx -g 'daemon off;'"

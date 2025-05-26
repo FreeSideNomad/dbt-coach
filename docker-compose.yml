@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  backend:
+    image: dbt-coach-backend:latest
+    container_name: dbt-coach-backend
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    ports:
+      - "8000:8000"
+    restart: always
+
+  frontend:
+    image: dbt-coach-frontend:latest
+    container_name: dbt-coach-frontend
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    ports:
+      - "4200:80"
+    environment:
+      - API_URL=http://dbt-coach-backend:8000/api
+    depends_on:
+      - backend
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        echo "window['env'] = { API_URL: 'http://dbt-coach-backend:8000/api' };" > /usr/share/nginx/html/frontend/browser/env.js && nginx -g 'daemon off;'

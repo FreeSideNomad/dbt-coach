@@ -72,20 +72,13 @@ export class ChatServiceService {
     }
   }
 
-  sendPrompt(conversationId: string, prompt: string): Observable<ChatMessage> {
-    // Send prompt to FastAPI backend
-    return this.http.post<ChatMessage>(
-      '/api/chat',
-      { conversation_id: conversationId, prompt }
-    );
-  }
-
   async sendEncryptedPrompt(conversationId: string, prompt: string, sessionKey: string): Promise<Observable<EncryptedChatMessage>> {
+    const API_URL = (window as any)['env']?.API_URL || '/api';
     // Fetch backend public key (cache for session)
     let backendPubKey = sessionStorage.getItem('dbt-backend-pubkey');
     let pubKey: CryptoKey;
     if (!backendPubKey) {
-      const resp = await fetch('/api/public-key');
+      const resp = await fetch(`${API_URL}/public-key`);
       const { public_key } = await resp.json();
       sessionStorage.setItem('dbt-backend-pubkey', public_key);
       backendPubKey = public_key;
@@ -98,7 +91,7 @@ export class ChatServiceService {
     const encrypted = await SymmetricCrypto.encrypt(prompt, sessionKey);
     // Send encrypted prompt and encrypted session key to backend
     return this.http.post<EncryptedChatMessage>(
-      '/api/chat',
+      `${API_URL}/chat`,
       {
         conversation_id: conversationId,
         encrypted_prompt: encrypted.ciphertext,
