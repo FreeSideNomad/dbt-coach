@@ -19,7 +19,7 @@ jobs:
 
       - name: Build backend image
         run: |
-          docker build -t $BACKEND_IMAGE -f backend/dockerfile backend
+          docker build -t dbt-coach-backend:latest -f backend/dockerfile backend
 
       - name: Build frontend image
         run: |
