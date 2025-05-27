@@ -23,7 +23,7 @@ jobs:
 
       - name: Build frontend image
         run: |
-          docker build -t $FRONTEND_IMAGE -f frontend/dockerfile frontend
+          docker build -t dbt-coach-frontend:latest -f frontend/dockerfile frontend
 
       - name: Stop and remove old containers (if running)
         run: |
@@ -32,7 +32,7 @@ jobs:
 
       - name: Start backend container
         run: |
-          docker run -d --name dbt-coach-backend -p 8000:8000 $BACKEND_IMAGE
+          docker run -d --name dbt-coach-backend -p 8000:8000 dbt-coach-frontend:latest
 
       - name: Start t frontend container with API_URL
         run: |
