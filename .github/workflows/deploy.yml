@@ -34,7 +34,7 @@ jobs:
         run: |
           docker run -d --name dbt-coach-backend -p 8000:8000 $BACKEND_IMAGE
 
-      - name: Start frontend container with API_URL
+      - name: Start t frontend container with API_URL
         run: |
           docker run -d --name dbt-coach-frontend -p 4200:80 \
             --link dbt-coach-backend \
